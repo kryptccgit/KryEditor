@@ -168,7 +168,7 @@ async function bootstrap(): Promise<void> {
     (() => {
       try {
         const s = app.getLoginItemSettings();
-        return s.wasOpenedAtLogin === true || s.wasOpenedAsHidden === true;
+        return s.wasOpenedAtLogin === true;
       } catch {
         return false;
       }

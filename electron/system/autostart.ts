@@ -6,7 +6,7 @@ export function setStartWithWindows(enabled: boolean): void {
   try {
     app.setLoginItemSettings(
       process.platform === 'darwin'
-        ? { openAtLogin: enabled, openAsHidden: enabled }
+        ? { openAtLogin: enabled }
         : { openAtLogin: enabled, args: enabled ? ['--hidden'] : [] },
     );
   } catch (err) {

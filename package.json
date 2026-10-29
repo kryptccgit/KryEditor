@@ -142,5 +142,8 @@
       "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "publish": null
+  },
+  "allowScripts": {
+    "electron@45.1.0": true
   }
 }
