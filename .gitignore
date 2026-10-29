@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist-electron/
+release/
+*.log
+.DS_Store
+test/.naming.mjs
+.winlog.txt
+.claude/
+test/.editor.mjs
+test/.mcp.e2e.mjs
