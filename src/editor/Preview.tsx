@@ -3,7 +3,7 @@ import { Play, Pause, SkipBack, Volume2, Clapperboard, Pencil, Maximize2, Minimi
 import type { MediaFile } from '@shared/types';
 import { useMediaStore } from './mediaStore';
 import {
-  activeClipAt,
+  activeAudioClips,
   activeOverlays,
   activeVisualLayers,
   upcomingVideoClips,
@@ -171,10 +171,8 @@ function syncMediaEl(el: HTMLMediaElement | null, clip: MediaClip | null, media:
 }
 
 export function Preview() {
-  const audioRef = useRef<HTMLAudioElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [masterVol, setMasterVol] = useState(1);
-  const masterRef = useRef(1);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -211,9 +209,8 @@ export function Preview() {
         .map((clip) => ({ clip, opacity: 0, dx: 0, scale: 1, blur: 0, audioGain: 0 })),
     [clips, tracks, playhead, mediaById, layers],
   );
-  const audioClip = useMemo(() => activeClipAt(clips, tracks, 'audio', playhead), [clips, tracks, playhead]);
+  const audioClips = useMemo(() => activeAudioClips(clips, tracks, playhead), [clips, tracks, playhead]);
   const overlays = useMemo(() => activeOverlays(clips, playhead, tracks), [clips, playhead, tracks]);
-  const audioMedia = audioClip ? mediaById.get(audioClip.mediaId) : undefined;
 
   const anyVisual = layers.length > 0 || overlays.length > 0;
 
@@ -251,14 +248,7 @@ export function Preview() {
     return () => cancelAnimationFrame(raf);
   }, [playing, total, setPlayhead, pause]);
 
-  useEffect(() => {
-    syncMediaEl(audioRef.current, audioClip, audioMedia, playing, playhead, masterRef.current);
-  }, [audioClip, audioMedia, playing, playhead, masterVol, mediaById]);
-
-  const onVolume = useCallback((v: number) => {
-    masterRef.current = v;
-    setMasterVol(v);
-  }, []);
+  const onVolume = useCallback((v: number) => setMasterVol(v), []);
 
   const onLayerDown = (clip: MediaClip) => (e: ReactPointerEvent): void => {
     e.preventDefault();
@@ -348,10 +338,12 @@ export function Preview() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-krypt-panel/80">
               <Clapperboard className="h-8 w-8 text-krypt-purple" />
             </div>
-            <div className="text-sm">{empty ? 'Add clips to the timeline to preview your edit.' : audioMedia ? 'Playing audio…' : 'No clip under the playhead.'}</div>
+            <div className="text-sm">{empty ? 'Add clips to the timeline to preview your edit.' : audioClips.length > 0 ? 'Playing audio…' : 'No clip under the playhead.'}</div>
           </div>
         )}
-        <audio ref={audioRef} className="hidden" />
+        {audioClips.map((c) => (
+          <AudioTrackPlayer key={c.trackId} clip={c} media={mediaById.get(c.mediaId)} playing={playing} playhead={playhead} masterVol={masterVol} />
+        ))}
       </div>
 
       <div className="flex items-center gap-3 px-1">
@@ -465,6 +457,33 @@ function polyToPx(frac: number[], w: number, h: number): string {
   let s = '';
   for (let i = 0; i + 1 < frac.length; i += 2) s += `${frac[i] * w},${frac[i + 1] * h} `;
   return s.trim();
+}
+
+function AudioTrackPlayer({
+  clip,
+  media,
+  playing,
+  playhead,
+  masterVol,
+}: {
+  clip: MediaClip;
+  media: MediaFile | undefined;
+  playing: boolean;
+  playhead: number;
+  masterVol: number;
+}) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  useEffect(() => {
+    syncMediaEl(audioRef.current, clip, media, playing, playhead, masterVol);
+  });
+  useEffect(
+    () => () => {
+      const el = audioRef.current;
+      if (el && !el.paused) el.pause();
+    },
+    [],
+  );
+  return <audio ref={audioRef} className="hidden" />;
 }
 
 function MediaLayerView({

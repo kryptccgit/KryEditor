@@ -1,4 +1,5 @@
 export {
+  activeAudioClips,
   activeWordAt,
   audibleTrackIds,
   captionClipsFor,

@@ -1,5 +1,6 @@
 import assert from 'node:assert';
 import {
+  activeAudioClips,
   activeWordAt,
   audibleTrackIds,
   denoiseChannel,
@@ -119,6 +120,21 @@ t('mute silences a track; solo overrides everything', () => {
   assert.deepStrictEqual([...audibleTrackIds(tracks)].sort(), ['a']);
   const soloed = [...tracks, { id: 'c', kind: 'audio', name: 'A3', solo: true }];
   assert.deepStrictEqual([...audibleTrackIds(soloed)], ['c']);
+});
+
+t('overlapping clips on separate audio tracks both play', () => {
+  const tracks = [
+    { id: 'a', kind: 'audio', name: 'A1' },
+    { id: 'b', kind: 'audio', name: 'A2' },
+    { id: 'm', kind: 'audio', name: 'A3', muted: true },
+  ];
+  const clips = [
+    mediaClip({ id: 'voice', trackId: 'a', start: 0, duration: 10 }),
+    mediaClip({ id: 'music', trackId: 'b', start: 2, duration: 10 }),
+    mediaClip({ id: 'muted', trackId: 'm', start: 0, duration: 10 }),
+  ];
+  assert.deepStrictEqual(activeAudioClips(clips, tracks, 5).map((c) => c.id).sort(), ['music', 'voice']);
+  assert.deepStrictEqual(activeAudioClips(clips, tracks, 1).map((c) => c.id), ['voice']);
 });
 
 t('ripple delete closes the gap on the same track', () => {

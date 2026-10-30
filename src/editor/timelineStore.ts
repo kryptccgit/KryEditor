@@ -1665,6 +1665,17 @@ function activeClipOnTrack(clips: Clip[], trackId: string, t: number): MediaClip
   return best;
 }
 
+export function activeAudioClips(clips: Clip[], tracks: Track[], t: number): MediaClip[] {
+  const audible = audibleTrackIds(tracks);
+  const out: MediaClip[] = [];
+  for (const tr of tracks) {
+    if (tr.kind !== 'audio' || !audible.has(tr.id)) continue;
+    const c = activeClipOnTrack(clips, tr.id, t);
+    if (c) out.push(c);
+  }
+  return out;
+}
+
 function trackTransitionAt(clips: Clip[], trackId: string, t: number): TransitionState | null {
   for (const c of clips) {
     if (c.type !== 'media' || c.trackId !== trackId || c.transition === 'none' || c.transitionDur <= 0) continue;
