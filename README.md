@@ -1,132 +1,95 @@
+<div align="center">
+
+<img src="resources/krypt.png" alt="Krypt Editor" width="108" />
+
 # Krypt Editor
 
-A free, no-bloat **CapCut-style video editor** for Windows. Cut, trim, compose,
-caption, and export — all on your machine, no accounts, no watermarks, no cloud.
-Part of the [Krypt](https://krypt.cc) free tools suite.
+**A free, open-source video editor for your desktop.**
 
-> Free. No ads. No telemetry. No bullshit. Built on [OpenCut](https://github.com/OpenCut-app/OpenCut) (MIT).
+Cut, trim, compose, caption and export on a real multi-track timeline, with on-device AI for auto edits, captions, reframing and voice-over, all in one clean app. No account, no watermark, no cloud.
 
-Electron + React + TypeScript + Vite + Tailwind + Zustand.
+[![Release](https://github.com/kryptccgit/KryEditor/actions/workflows/release.yml/badge.svg)](https://github.com/kryptccgit/KryEditor/actions/workflows/release.yml)
+&nbsp;[![License: MIT](https://img.shields.io/badge/License-MIT-6366F1)](LICENSE)
+&nbsp;[![Windows 10 | 11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows&logoColor=white)](#download)
+&nbsp;[![macOS: Apple Silicon](https://img.shields.io/badge/macOS-Apple%20Silicon%20%C2%B7%20unsigned-6B7280)](#download)
+&nbsp;[![Status: beta](https://img.shields.io/badge/status-beta-F59E0B)](#download)
+&nbsp;[![Price: free](https://img.shields.io/badge/Price-free-EC4899)](#download)
 
-## Features
+<a href="../../releases/latest"><img src="https://img.shields.io/badge/Download-Krypt%20Editor-A855F7?style=for-the-badge&logo=github&logoColor=white" alt="Download Krypt Editor" /></a>
+&nbsp;<a href="https://discord.gg/muzFKR657F"><img src="https://img.shields.io/badge/Join%20the-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Discord" /></a>
+&nbsp;<a href="https://krypt.cc/tools"><img src="https://img.shields.io/badge/More%20free%20tools-krypt.cc%2Ftools-EC4899?style=for-the-badge&logo=googlechrome&logoColor=white" alt="More free tools at krypt.cc/tools" /></a>
 
-- **Multi-track timeline** — video / audio / text+overlay tracks with per-track
-  **mute / solo / lock / hide**; trim, split, duplicate, copy/paste,
-  **ripple delete** and close-gap, marquee-select, snapping, Ctrl+wheel zoom,
-  drag clips between tracks; filmstrip thumbnails on video and waveforms on
-  audio.
-- **Compositing** — real multi-track layering with per-clip opacity,
-  **16 blend modes**, **shape masks** (linear / rect / ellipse with feather and
-  invert), CapCut-style transform handles, crop, and rotation.
-- **Canvas** — auto-resolution from your first clip plus 16:9 / 9:16 / 1:1 / 4:5
-  presets; background fill (solid color, gradient, or a blurred copy of the clip).
-- **Effects** — color adjust (brightness / contrast / saturation / hue /
-  vignette), **3D color LUTs** (import any `.cube`, GPU-graded with a strength
-  slider, embedded in the project file), look filters, and real-time GPU
-  effects (glitch, VHS, chromatic aberration, CRT, film grain, pixelate);
-  **chroma key** (green screen) and **on-device AI background removal**.
-- **Text & titles** — fonts, outline, glow, background box / per-line highlight,
-  and 11 in/out animations (incl. typewriter, bounce, spin); emoji stickers,
-  vector shapes, and a freehand drawing tool.
-- **Transitions** — crossfade, dip, slide, push, wipe, zoom, blur — drag onto the
-  seam between two clips (or pick in the inspector), with adjustable duration
-  and audio crossfade.
-- **Keyframes** — animate transform, opacity, **volume**, **speed**, and
-  overlay position with easing curves; keyframes show as draggable diamonds on
-  selected timeline clips (Alt+click deletes, click jumps the playhead); type
-  exact values into any slider. Keyframes survive splits and trims.
-- **Speed curves** — CapCut-style velocity presets (Montage, Hero, Bullet,
-  Jump cut) or hand-keyed speed ramps, pitch-preserved in preview *and*
-  export; plus one-click **freeze frame** and **reverse clip**.
-- **Auto edit** — finds the dead air and cuts it: an on-device loudness
-  envelope with an adaptive noise floor, previewed as red bands on the timeline
-  while you tune sensitivity / minimum pause / padding, then applied as one
-  undo step that ripples every track. Presets for talking head, voice-over,
-  podcast, gameplay, and zooms-only, plus an optional alternating punch-in zoom
-  on each cut to hide the jumps. A **Speech (AI)** mode listens with Whisper as well as loudness
-  (a transcript gap only counts where the sound is also quieter than your voice), so game audio and music no longer count as talking, and
-  can also remove filler words ("um", "uh"), cut retakes (a phrase said again
-  within 15 s keeps only the last take), and add captions in the same pass.
-- **Edit by transcript** — the **Transcript** button shows what was said as
-  text beside the video: click a word to jump there, drag over words (or find
-  a phrase and select every match) and press Delete, and that part is cut from
-  every track, gaps closed, one undo step. Uses the same on-device Whisper
-  transcript as auto edit and captions, so it's instant once one exists.
-- **Auto reframe** — turn a landscape video into 9:16 (or 1:1, 4:5) in one go:
-  every clip is scaled to fill the new shape and an on-device face detector
-  keeps the speaker in shot, with calm eased pans only when they actually
-  move. Footage without a clear face (gameplay with a small facecam) stays
-  centred.
-- **AI agents (MCP)** — the **AI agents** button (top right) connects Claude Code, Codex,
-  Cursor, Claude Desktop, VS Code, Windsurf, Gemini CLI, or any other MCP
-  client in one click, then lets you edit by asking: "cut the pauses", "remove
-  the part about sponsors", "make it vertical and add a title", "export to my
-  Desktop", "VHS look and a crossfade on every cut". 31 tools reach the
-  whole editor — auto edit and transcript cuts, clips, titles, shapes,
-  stickers, every effect / LUT / blend / mask / chroma key / background
-  removal, transitions, keyframes, speed curves, freeze and reverse, tracks,
-  captions, voice-over and re-voice, auto reframe, ducking, canvas and background, frame previews, undo/redo,
-  save/open, export — run live in the editor, each as one undo step, with an activity log and an off
-  switch. Local only: a per-user named pipe with a token; clients start a
-  small stdio bridge that ships inside the app (no Node install needed).
-- **Auto-captions** — on-device speech-to-text (Whisper) in background
-  workers with word-level timing, English or multilingual models, full styling,
-  **karaoke word-by-word highlighting** (color / pop / box), and SRT/VTT
-  import/export. Runs on the graphics card when there is one (WebGPU), skips
-  long silences, and reuses a transcript you already have (Transcript, auto
-  edit) instead of listening again. **Fast** (Whisper base) or **Accurate**
-  (Whisper large-v3-turbo, or Whisper small on GPUs without fp16) in Settings.
-- **Audio** — per-clip volume (keyframable) / mute / fades, detach audio,
-  **on-device noise reduction** (spectral gate for hiss/hum/fans), full mix on
-  export. **Auto duck** lowers music and game audio whenever someone talks
-  (found from the transcript when there is one, else loudness) and brings it
-  back in the pauses, as editable volume keyframes. Exports can be
-  **loudness-normalized** to −14 LUFS (YouTube / Spotify / TikTok), −16
-  (podcasts) or −23 (broadcast), measured per ITU-R BS.1770 with a look-ahead
-  limiter keeping peaks under −1 dB.
-- **Text to speech** — on-device voice-over: 28 natural English voices (US and UK)
-  with Kokoro, the voice engine from Krypt Studio (reused from Studio when it is
-  installed there), plus Spanish, French, German, Portuguese and Korean (MMS-TTS).
-  Type a line, it lands on an audio track at the playhead. Runs on the GPU when it
-  can. No cloud, no credits.
-- **Re-voice** — replace the speech in a clip with one of those voices at the
-  same timing: it transcribes the clip, you fix or rewrite any line, and the new
-  voice lands on its own track (lines that run long are sped up slightly to
-  fit) while the original is muted or lowered under it. One undo step.
-- **Export** — MP4 (H.264/AAC), WebM (VP9/Opus), or audio-only M4A, with chosen
-  resolution, frame rate, and quality; **hardware encoding** when the GPU
-  supports it, streamed straight to disk (no RAM blow-up on long projects).
-  An untouched recording exported at its own size and frame rate is copied
-  **losslessly** (no re-encode, seconds instead of minutes).
-- **Projects** — save/open `.krypt` files (validated, crash-safe atomic
-  writes), autosave with backup generation, recents, and starter templates.
-  Opens media via file association and "Open with".
+</div>
 
-## Install
+---
 
-Download the latest **`Krypt Editor-Setup-x.y.z.exe`** from the Releases page and
-run it (Windows 10/11, 64-bit). The installer is unsigned, so Windows SmartScreen
-may show a warning on first run — click **More info → Run anyway**.
+Krypt Editor is a no-bloat, CapCut-style editor that runs entirely on your machine. Layer video, audio, titles and shapes on a multi-track timeline, grade with LUTs and GPU effects, and animate anything with keyframes. On-device AI cuts the dead air out of a talking video, lets you edit by deleting words from the transcript, captions it word by word, reframes it to vertical and replaces a voice with a natural-sounding one. You can also hand the whole editor to Claude, Cursor, Codex or any MCP client and edit by asking. Free, no ads, no telemetry. Built on [OpenCut](https://github.com/OpenCut-app/OpenCut) (MIT).
 
-Everything works **offline**. Four optional features download a small model
-from the internet the first time you use them, then cache it: **auto-captions**
-(Whisper: about 300 MB, or 1–1.6 GB for Accurate), **text to speech** (Kokoro for English, about 340 MB; MMS-TTS for other languages), and **AI background removal** and **auto reframe**
-(MediaPipe).
+## What it does
+
+- **Multi-track timeline** — video, audio and overlay tracks with mute / solo / lock / hide; trim, split, ripple delete, close gaps, snapping, marquee select, filmstrip thumbnails and waveforms.
+- **Compositing** — real layering with per-clip opacity, 16 blend modes, feathered shape masks, transform handles, crop and rotation.
+- **Canvas** — sized from your first clip, or 16:9 / 9:16 / 1:1 / 4:5 presets, over a solid, gradient or blurred-clip background.
+- **Effects** — color adjust, `.cube` 3D LUTs graded on the GPU, look filters, real-time glitch / VHS / chromatic aberration / CRT / film grain / pixelate, chroma key and on-device AI background removal.
+- **Text & titles** — fonts, outline, glow, background boxes, 11 in/out animations, emoji stickers, vector shapes and freehand drawing.
+- **Transitions** — crossfade, dip, slide, push, wipe, zoom and blur: drop one on a seam, with a matching audio crossfade.
+- **Keyframes** — animate transform, opacity, volume, speed and overlay position with easing; they survive splits and trims.
+- **Speed curves** — Montage, Hero, Bullet and Jump cut presets or your own ramps, pitch-preserved in preview and export, plus freeze frame and reverse.
+- **Auto edit** — finds the pauses and cuts them in one undo step across every track, with presets for talking head, voice-over, podcast and gameplay. **Speech (AI)** mode listens with Whisper so game audio and music don't count as talking, and can also drop filler words, cut retakes and caption in the same pass.
+- **Edit by transcript** — see what was said beside the video; select words and press Delete to cut them from every track.
+- **Auto reframe** — turn landscape into 9:16, 1:1 or 4:5 in one go, with an on-device face detector keeping the speaker in shot.
+- **Auto-captions** — on-device Whisper with word-level timing, karaoke highlighting, full styling and SRT/VTT import/export. **Fast** or **Accurate** models, on the GPU when there is one.
+- **Audio** — keyframable volume, fades, detach audio, on-device noise reduction, **auto duck** for music under a voice, and loudness-normalized exports at −14 / −16 / −23 LUFS.
+- **Text to speech** — 28 natural English voices (Kokoro, the voice engine from Krypt Studio) plus Spanish, French, German, Portuguese and Korean. Type a line and it lands on the timeline.
+- **Re-voice** — replace a clip's speech with one of those voices at the same timing, fixing or rewriting any line first.
+- **AI agents (MCP)** — connect Claude Code, Claude Desktop, Codex, Cursor, VS Code, Windsurf or Gemini CLI in one click, then edit by asking: *"cut the pauses"*, *"make it vertical and add a title"*, *"export to my Desktop"*. 31 tools reach the whole editor, each change is one undo step, and it all stays local.
+- **Export** — MP4 (H.264/AAC), WebM (VP9/Opus) or M4A, hardware-encoded when your GPU supports it and streamed to disk. An untouched recording at its own size is copied losslessly in seconds.
+- **Projects** — `.krypt` files with crash-safe saves, autosave with backups, recents and starter templates.
+
+## Local and private
+
+- **No account, no watermark, no telemetry** — nothing about you or your projects is sent anywhere.
+- **Everything works offline.** Four optional features download a model the first time you use them, then cache it: auto-captions (Whisper: about 300 MB, or 1–1.6 GB for Accurate), text to speech (Kokoro: about 340 MB; MMS-TTS for other languages), and AI background removal and auto reframe (MediaPipe).
+- **AI agents connect over a local pipe** with a per-user token, and there's an off switch and an activity log for everything they do.
+
+## Download
+
+<a href="../../releases/latest"><img src="https://img.shields.io/badge/Download%20for%20Windows-Krypt%20Editor-A855F7?style=for-the-badge&logo=windows&logoColor=white" alt="Download Krypt Editor" /></a>
+
+Grab the latest **`Krypt Editor-Setup-x.y.z-x64.exe`** (or `-arm64.exe`) from the [**Releases**](../../releases) page and run it (Windows 10/11). Releases also carry an **unsigned macOS build for Apple Silicon** (dmg and zip), which gets less testing than the Windows one.
+
+> Builds aren't code-signed yet, so the first launch may show a SmartScreen prompt — click **More info → Run anyway**. The full source is right here if you'd rather build it yourself.
+
+### Opening it on macOS
+
+The mac build is not notarized (Apple charges $99/yr for the certificate that would make this unnecessary), so the first launch needs one manual approval:
+
+1. Open the `.dmg` and drag **Krypt Editor** to Applications.
+2. Launch it once. macOS refuses — pick **Done**.
+3. **System Settings → Privacy & Security**, scroll to Security: *"Krypt Editor was blocked"* → **Open Anyway**, then confirm.
 
 ## Build from source
 
 ```bash
+git clone https://github.com/kryptccgit/KryEditor.git
+cd KryEditor
 npm install
 npm run dev        # Vite + Electron with HMR
 npm run typecheck  # tsc for renderer + main
 npm test           # pure-logic unit tests
-npm run build      # production renderer + main bundles
-npm run dist       # build + electron-builder NSIS installer (release/)
-npm run make-ico   # rebuild resources/krypt.ico from krypt.png
+npm run dist       # build the installer for your OS into /release
 ```
+
+Requires [Node.js](https://nodejs.org) 20+. Built with Electron, React, TypeScript, Vite, Tailwind and Zustand. Every push to `main` builds the Windows and macOS installers and attaches them to a GitHub Release.
+
+## Links
+
+- **Website** — [krypt.cc/tools/editor](https://krypt.cc/tools/editor) · more free tools at [krypt.cc/tools](https://krypt.cc/tools)
+- **Support and community** — [Discord](https://discord.gg/muzFKR657F)
+- **Credits** — bundled libraries and AI models are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Based on [OpenCut](https://github.com/OpenCut-app/OpenCut)
-(MIT). Bundled libraries and downloaded AI models are credited in
-[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Released under the [MIT License](LICENSE) — free to use, fork and share. Please don't rebrand and resell it. Based on [OpenCut](https://github.com/OpenCut-app/OpenCut) (MIT). Provided **as-is, with no warranty**.
+
+<div align="center"><sub>Built by the Krypt team · <a href="https://krypt.cc/tools/editor">krypt.cc/tools/editor</a></sub></div>
